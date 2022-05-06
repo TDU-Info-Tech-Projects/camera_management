@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  api:
+    container_name: "api"
+    build: .
+    command: python -m flask run --host=0.0.0.0
+    env_file:
+      - .env
+    volumes:
+      - .:/api
+    ports:
+      - "22325:22325"
+    # depends_on:
+    # - postgres
+    restart: unless-stopped
+
