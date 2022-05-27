@@ -2,6 +2,7 @@
 .env
 .idea
 backend/postgres_data/*
+instance/
 
 ### For macOS ###
 .DS_Store
