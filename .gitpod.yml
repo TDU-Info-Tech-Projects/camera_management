@@ -6,10 +6,11 @@
 tasks:
   - name: Python API
     init: >
-      cd backend && pip install pipenv &&
+      cd /workspace/camera_management/backend &&
+        pip install pipenv &&
         pipenv install --system
     command: >
-      cd backend && 
+      cd /workspace/camera_management/backend && 
         pipenv install --system &&
         export FLASK_APP=app &&
         export FLASK_ENV=development &&
