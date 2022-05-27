@@ -1,9 +1,10 @@
 FROM python:3.10.4-slim-buster
 
-COPY . /api
+COPY . /backend
 
-WORKDIR /api
+WORKDIR /backend
 
 #RUN pip install Flask
+RUN pip install pipenv
 
-RUN pip install -r requirements.txt
+RUN pipenv install --system
