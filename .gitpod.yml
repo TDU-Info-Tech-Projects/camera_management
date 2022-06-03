@@ -8,6 +8,7 @@ tasks:
     init: >
       cd /workspace/camera_management/backend &&
         pip install pipenv &&
+        pipenv --python /home/gitpod/.pyenv/shims/python &&
         pipenv install --system
     command: >
       cd /workspace/camera_management/backend && 
