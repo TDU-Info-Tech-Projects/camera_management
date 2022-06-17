@@ -2,13 +2,19 @@ import os
 
 from flask import Flask
 from controllers import auth
+import database.models
+from database.db import Base, engine
+
+def init_db():
+    Base.metadata.create_all(engine)
 
 def create_app(test_config=None):
+    init_db()
+
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         # TODO: generate randon secret key for prod
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
     
     # register blueprints

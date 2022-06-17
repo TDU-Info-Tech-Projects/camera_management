@@ -1,12 +1,17 @@
 version: "3.8"
 
 services:
-  # api_db:
-  #   container_name: api_db
-  #   image: postgres:latest
-  #   ports:
-  #     - "5432:5432"
-  
+  api_db:
+    container_name: api_db
+    image: postgres:14.3-alpine3.16
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+
   api:
     container_name: "api"
     build: .
@@ -17,7 +22,7 @@ services:
       - .:/backend
     ports:
       - "5000:5000"
-    # depends_on:
-    #  - api_db
-    restart: unless-stopped
+    depends_on:
+     - api_db
+    # restart: unless-stopped
 

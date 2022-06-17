@@ -5,6 +5,7 @@ COPY . /backend
 WORKDIR /backend
 
 #RUN pip install Flask
-RUN pip install pipenv
+# RUN apt-get install libpq-dev
+RUN pip install pipenv && pip install psycopg2-binary 
 
 RUN pipenv install --system

@@ -3,6 +3,7 @@
 .idea
 backend/postgres_data/*
 instance/
+db-data
 
 ### For macOS ###
 .DS_Store
@@ -45,3 +46,4 @@ yarn-error.log
 
 ### Python ###
 __pycache__
+.venv
