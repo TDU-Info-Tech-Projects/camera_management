@@ -1,9 +1,10 @@
 from collections import UserList
+from sqlite3 import Date
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Sequence
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from setting import ENGINE, Base
-from datetime import datetime
+from datetime import date, datetime
 from uuid import uuid4
 import sys
 
@@ -21,30 +22,30 @@ class User(Base):
 class Category(Base):
     __tablename__ = "category"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, nullable=False,  unique=True)
     item = relationship("Item", backref="category")
 
 class Manufacture(Base):
     __tablename__ = "manufacture"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, nullable=False,  unique=True)
     item = relationship("Item", backref="manufacture")
 
 class Mount(Base):
     __tablename__ = "mount"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, nullable=False,  unique=True)
     item = relationship("Item", backref="mount")
 
 class Item(Base):
     __tablename__ = "item"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)  
+    name = Column(String, nullable=False,  unique=True)
     is_consumable = Column(Boolean, nullable=False)
     category_id = Column(Integer, ForeignKey("category.id"), nullable=False)
     manufacture_id = Column(Integer, ForeignKey("manufacture.id"), nullable=False)
     mount_id = Column(Integer, ForeignKey("mount.id"), nullable=False)
-    release_date = Column(DateTime)
+    release = Column(DateTime)
     loanItem = relationship("LoanItem", backref="item")
 
 class LoanItem(Base):
