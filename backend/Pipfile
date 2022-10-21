@@ -7,8 +7,10 @@ name = "pypi"
 flask = "<2.1.9"
 python-dotenv = "*"
 sqlalchemy = "*"
+bcrypt = "*"
 
 [dev-packages]
+autopep8 = "*"
 
 [requires]
 python_version = ">=3.8"

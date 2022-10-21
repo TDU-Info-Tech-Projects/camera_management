@@ -1,3 +1,12 @@
+# Cameraのフロントエンドk
+
+## 実行はDockerで。
+
+```bash
+docker compose up
+
+```
+
 # frontend
 
 ## Project setup
