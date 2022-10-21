@@ -3,7 +3,7 @@ from sqlite3 import Date
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Sequence
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from setting import ENGINE, Base
+from database import engine, Base
 from datetime import date, datetime
 from uuid import uuid4
 import sys
@@ -14,6 +14,7 @@ class User(Base):
     uuid = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     email_address = Column(String, nullable=False, unique=True)
     password_hash = Column(String, nullable=False)
+    password_salt = Column(String, nullable=False)
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -58,7 +59,7 @@ class LoanItem(Base):
     return_date = Column(DateTime)
 
 def main(args):
-    Base.metadata.create_all(bind=ENGINE)
+    Base.metadata.create_all(bind=engine)
 
 
 if __name__ == "__main__":
