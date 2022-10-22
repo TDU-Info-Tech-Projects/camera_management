@@ -27,5 +27,7 @@ cp .env.example .env
         - `docker compose up -d api_db #データベースを起動`
         - ` export FLASK_APP=app && export FLASK_ENV=development && pipenv run python -m flask run`
     - dockerで実行したい場合
-        - `docker compose up -d`
+        - `docker compose up api_db -d`
+        - `docker compose up pgadmin -d` (pgAdminは実行に必要ないがDBの中身を見たい時は便利！)
+        - `docker compose up api`
 

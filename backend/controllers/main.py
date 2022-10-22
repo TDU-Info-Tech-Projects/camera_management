@@ -4,3 +4,6 @@ from flask import (
 )
 
 bp = Blueprint('api', __name__, url_prefix="/api")
+
+from controllers.items import *
+from controllers.auth import *

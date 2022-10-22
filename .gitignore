@@ -4,6 +4,7 @@
 backend/postgres_data/*
 instance/
 db-data
+pgadmin
 
 ### For macOS ###
 .DS_Store

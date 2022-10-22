@@ -1,8 +1,7 @@
 import os
 
 from flask import Flask
-from controllers import auth
-import database.models
+from controllers.main import bp
 from database.db import Base, engine
 
 def init_db():
@@ -18,7 +17,7 @@ def create_app(test_config=None):
     )
     
     # register blueprints
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(bp)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
