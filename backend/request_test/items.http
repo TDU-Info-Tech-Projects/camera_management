@@ -1,0 +1,49 @@
+### Insert mount
+POST http://localhost:8000/api/mounts/add
+Content-Type: application/json
+
+{
+	"name": "Canon-A"
+}
+
+### Insert mount 2
+POST http://localhost:8000/api/mounts/add
+Content-Type: application/json
+
+{
+	"name": "Sony AE"
+}
+
+### Get mounts
+GET http://localhost:8000/api/mounts
+
+### Insert item
+POST http://localhost:8000/api/items/add
+Content-Type: application/json
+
+{
+	"name": "Canon XD4",
+	"image_url": "google.com",
+	"stock": 1,
+	"is_consumable": false,
+	"is_lens": false,
+	"mount_id": 1,
+	"release": "2020/02/02"
+}
+
+### Insert item 2
+POST http://localhost:8000/api/items/add
+Content-Type: application/json
+
+{
+	"name": "Sony a6400",
+	"image_url": "sony.com",
+	"stock": 1,
+	"is_consumable": false,
+	"is_lens": false,
+	"mount_id": 2,
+	"release": "2020/02/02"
+}
+
+### Get items
+GET http://localhost:8000/api/items

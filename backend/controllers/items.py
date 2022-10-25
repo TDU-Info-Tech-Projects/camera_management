@@ -5,10 +5,9 @@ from time import timezone
 from flask import jsonify, request, abort, Response
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from os import urandom
-from database.models import User
 from database import engine
 from controllers.main import bp
-from database.models.models import Item, Mount
+from database.models import Item, Mount
 from services import validate_email, validate_password
 from sqlalchemy.orm import Session
 from sqlalchemy import select

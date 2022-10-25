@@ -13,5 +13,4 @@ db_string = '{}://{}:{}@{}:{}/{}'.format(
     getenv("POSTGRES_DB")
 )
 
-print(db_string, flush=True)
 engine = create_engine(db_string)

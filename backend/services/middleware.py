@@ -59,7 +59,7 @@ def protected(admin_only=False):
                 res = Response(status=UNAUTHORIZED)
                 res.delete_cookie("jwt-auth")
                 return res
-            print(userInfo, flush=True)
+
             request.user = userInfo
             return f(*args, **kwargs)
         return __protected

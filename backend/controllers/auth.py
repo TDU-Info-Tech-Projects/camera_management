@@ -90,7 +90,7 @@ def login():
             {
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "email": user.email_address,
+                "email_address": user.email_address,
                 "exp":  exp
             },
             JWT_SECRET,

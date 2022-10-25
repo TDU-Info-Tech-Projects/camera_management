@@ -1,0 +1,12 @@
+### Rent
+POST http://localhost:8000/api/items/rent
+Content-Type: application/json
+
+{
+    "ids": [1, 2],
+    "due_date": "2022-10-26"
+}
+
+### My rented items
+
+GET http://localhost:8000/api/items/rented

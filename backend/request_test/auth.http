@@ -23,33 +23,3 @@ POST http://localhost:8000/api/logout
 
 ### Test protected
 GET http://localhost:8000/api/protected
-
-### Insert mount
-POST http://localhost:8000/api/mounts/add
-Content-Type: application/json
-
-{
-	"id": 1,
-	"name": "Canon-A"
-}
-
-### Get mounts
-GET http://localhost:8000/api/mounts
-
-### Insert item
-POST http://localhost:8000/api/items/add
-Content-Type: application/json
-
-{
-	"id": 1,
-	"name": "Canon XD4",
-	"image_url": "google.com",
-	"stock": 12,
-	"is_consumable": false,
-	"is_lens": false,
-	"mount_id": 1,
-	"release": "2020/02/02"
-}
-
-### Get items
-GET http://localhost:8000/api/items
