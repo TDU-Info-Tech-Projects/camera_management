@@ -4,9 +4,17 @@ Content-Type: application/json
 
 {
     "ids": [1, 2],
-    "due_date": "2022-10-29"
+    "due_date": "2022-11-01"
 }
 
 ### My rented items
 
 GET http://localhost:8000/api/items/rented
+
+### Return
+POST http://localhost:8000/api/items/return
+Content-Type: application/json
+
+{
+    "ids": [1, 2]
+}

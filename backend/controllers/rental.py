@@ -61,3 +61,35 @@ def rented_items():
         items = session.execute(select(RentItem).where(RentItem.user_id == user.id)).scalars().all()
 
         return jsonify(items)
+
+
+# receive IDs in the loan_items table
+@bp.route("/items/return", methods=("POST",))
+@protected()
+def return_items():
+    req = request.json
+    if "ids" not in req:
+        abort(UNPROCESSABLE_ENTITY)
+
+    # YYYY-MM-DD
+    return_date = datetime.now().date()
+
+    user_email = request.user["email_address"]
+
+    with Session(engine) as session, session.begin():
+        user = session.execute(select(User).where(User.email_address == user_email)).scalar_one()
+        rentItems = session.execute(select(RentItem).where(RentItem.id.in_(req["ids"]))).scalars().all()
+        items = []
+
+        for rentItem in rentItems:
+            if ((rentItem.return_date) or (rentItem.user_id != user.id)):
+                abort(UNPROCESSABLE_ENTITY)
+            rentItem.return_date = return_date
+            item = session.execute(select(Item).where(Item.id == rentItem.item_id)).scalar_one()
+            item.stock += 1
+            items.append(item)
+
+        session.add_all(rentItems)
+        session.add_all(items)
+
+    return Response(OK)
