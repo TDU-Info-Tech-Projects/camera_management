@@ -82,14 +82,14 @@ def return_items():
         items = []
 
         for rentItem in rentItems:
-            if ((rentItem.return_date) or (rentItem.user_id != user.id)):
+            if rentItem.return_date or rentItem.user_id != user.id:
                 abort(UNPROCESSABLE_ENTITY)
             rentItem.return_date = return_date
             item = session.execute(select(Item).where(Item.id == rentItem.item_id)).scalar_one()
             item.stock += 1
             items.append(item)
 
-        session.add_all(rentItems)
-        session.add_all(items)
+        session.bulk_save_objects(rentItems)
+        session.bulk_save_objects(items)
 
     return Response(OK)
