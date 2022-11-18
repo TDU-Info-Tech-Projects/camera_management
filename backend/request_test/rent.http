@@ -3,13 +3,21 @@ POST http://localhost:8000/api/items/rent
 Content-Type: application/json
 
 {
-    "ids": [1, 2],
-    "due_date": "2022-11-01"
+    "ids": [1, 3],
+    "due_date": "2022-11-12"
 }
 
 ### My rented items
-
 GET http://localhost:8000/api/items/rented
+
+### Admin rented items
+GET http://localhost:8000/api/items/rented/admin
+
+### Overdue items
+GET http://localhost:8000/api/items/overdue
+
+### Admin overdue items
+GET http://localhost:8000/api/items/overdue/admin
 
 ### Return
 POST http://localhost:8000/api/items/return
