@@ -3,7 +3,7 @@ from datetime import datetime
 from http.client import OK, UNPROCESSABLE_ENTITY
 
 from flask import jsonify, request, abort, Response
-from sqlalchemy import select
+from sqlalchemy import select, null
 from sqlalchemy.orm import Session
 
 from controllers.main import bp
@@ -60,6 +60,32 @@ def rented_items():
         user = session.execute(select(User).where(User.email_address == email)).scalar_one()
         items = session.execute(select(RentItem).where(RentItem.user_id == user.id)).scalars().all()
 
+        return jsonify(items)
+
+
+@bp.route("/items/rented/admin")
+@protected(admin_only=True)
+def admin_rented_items():
+    with Session(engine) as session, session.begin():
+        items = session.execute(select(RentItem)).scalars().all()
+        return jsonify(items)
+
+
+@bp.route("/items/overdue")
+@protected()
+def overdue_items():
+    email = request.user["email_address"]
+    with Session(engine) as session, session.begin():
+        user = session.execute(select(User).where(User.email_address == email)).scalar_one()
+        items = session.execute(select(RentItem).where((RentItem.user_id == user.id) & (RentItem.return_date == None) & (RentItem.due_date < datetime.now().date()))).scalars().all()
+        return jsonify(items)
+
+
+@bp.route("/items/overdue/admin")
+@protected()
+def admin_overdue_items(admin_only=True):
+    with Session(engine) as session, session.begin():
+        items = session.execute(select(RentItem).where((RentItem.return_date == None) & (RentItem.due_date < datetime.now().date()))).scalars().all()
         return jsonify(items)
 
 
