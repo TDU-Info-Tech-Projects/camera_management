@@ -35,6 +35,17 @@ def register_mount():
     return Response(status=OK)
 
 
+@bp.route("/mounts/delete", methods=('POST',))
+@protected(admin_only=True)
+def unregister_mount():
+    req = request.json
+    with Session(engine) as session, session.begin():
+        mount = session.query(Mount).where(Mount.id == req["id"]).one()
+        session.delete(mount)
+        session.commit()
+    return Response(status=OK)
+
+
 @bp.route("/mounts")
 def get_mounts():
     with Session(engine) as session:
@@ -68,6 +79,17 @@ def register_item():
         session.merge(item)
 
     return Response(OK)
+
+
+@bp.route("/items/delete", methods=('POST',))
+@protected(admin_only=True)
+def unregister_item():
+    req = request.json
+    with Session(engine) as session, session.begin():
+        item = session.query(Item).where(Item.id == req["id"]).one()
+        session.delete(item)
+        session.commit()
+    return Response(status=OK)
 
 
 @bp.route("/items")

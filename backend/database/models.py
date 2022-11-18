@@ -13,8 +13,6 @@ import sys
 class User(Base):
     __tablename__ = "users"
     email_address: Any
-    password_hash: Any
-    password_salt: Any
     first_name: Any
     last_name: Any
 

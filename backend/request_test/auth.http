@@ -3,13 +3,54 @@ POST http://localhost:8000/api/register
 Content-Type: application/json
 
 {
-	"email": "user4@test.com",
-	"password": "password4",
-	"first_name": "user4",
-	"last_name": "last4"
+	"email": "user2@test.com",
+	"password": "password2",
+	"first_name": "user2",
+	"last_name": "last2"
 }
 
-### Login
+### Register 2
+POST http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+	"email": "deleteme@test.com",
+	"password": "deleteme",
+	"first_name": "delete",
+	"last_name": "me"
+}
+
+### Delete user
+POST http://localhost:8000/api/unregister
+Content-Type: application/json
+
+{
+	"email": "deleteme@test.com"
+}
+
+### Get users
+GET http://localhost:8000/api/users
+
+
+### Login user1
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+	"email": "user1@test.com",
+	"password": "password1"
+}
+
+### Login user2
+POST http://localhost:8000/api/login
+Content-Type: application/json
+
+{
+	"email": "user2@test.com",
+	"password": "password2"
+}
+
+### Login user4
 POST http://localhost:8000/api/login
 Content-Type: application/json
 
