@@ -1,13 +1,4 @@
-# Cameraのフロントエンドk
-
-## 実行はDockerで。
-
-```bash
-docker compose up
-
-```
-
-# frontend
+# hello-router
 
 ## Project setup
 ```
