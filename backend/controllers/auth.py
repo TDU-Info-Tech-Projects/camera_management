@@ -75,11 +75,12 @@ def get_users():
         return jsonify(result)
 
 
+ADMIN_EMAIL = os.environ.get("ADMIN")
+
 @bp.route("/login", methods=('POST',))
 @validate_email
 @validate_password
 def login():
-    # TODO: use response.user to generate JWT and write it to cookie
     email = request.json["email"]
     password = request.json["password"]
 
@@ -110,7 +111,8 @@ def login():
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email_address": user.email_address,
-                "exp":  exp
+                "exp":  exp,
+                "is_admin": user.email_address == ADMIN_EMAIL
             },
             JWT_SECRET,
             algorithm="HS256"

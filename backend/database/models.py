@@ -40,6 +40,7 @@ class User(Base):
 @dataclass
 class Mount(Base):
     __tablename__ = "mounts"
+    id: Any
     name: Any
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -57,6 +58,7 @@ class Item(Base):
     is_lens: Any
     mount_id: Any
     release: Any
+    description: Any
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False,  unique=True)
@@ -67,6 +69,7 @@ class Item(Base):
     # category_id = Column(Integer, ForeignKey("category.id"), nullable=False)
     # manufacture_id = Column(Integer, ForeignKey("manufacture.id"), nullable=False)
     mount_id = Column(Integer, ForeignKey("mounts.id"), nullable=False)
+    description = Column(String, nullable=True)
     release = Column(DateTime)
     rentItem = relationship("RentItem", backref="items")
 

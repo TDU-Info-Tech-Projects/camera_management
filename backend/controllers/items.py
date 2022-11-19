@@ -70,6 +70,7 @@ def register_item():
     item.stock = req["stock"]
     item.is_consumable = req["is_consumable"]
     item.is_lens = req["is_lens"]
+    item.description = req["description"]
     # item.category_id = req["category_id"]
     # item.manufacture_id = req["manufacture_id"]
     item.mount_id = req["mount_id"]
