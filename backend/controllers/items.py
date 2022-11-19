@@ -7,10 +7,10 @@ from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from os import urandom
 from database import engine
 from controllers.main import bp
-from database.models import Item, Mount
+from database.models import Item, Mount, RentItem
 from services import validate_email, validate_password
 from sqlalchemy.orm import Session
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from services.middleware import validate_fullname, protected
 import jwt
 import os
@@ -86,9 +86,10 @@ def register_item():
 def unregister_item():
     req = request.json
     with Session(engine) as session, session.begin():
+        stmt = delete(RentItem).where(RentItem.item_id == req["id"])
+        session.execute(stmt)
         item = session.query(Item).where(Item.id == req["id"]).one()
         session.delete(item)
-        session.commit()
     return Response(status=OK)
 
 

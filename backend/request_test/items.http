@@ -39,8 +39,8 @@ POST http://localhost:8000/api/items/add
 Content-Type: application/json
 
 {
-	"name": "Canon XD4",
-	"image_url": "google.com",
+	"name": "デジタル一眼カメラ α7 III",
+	"image_url": "https://www.sony.jp/products/picture/ILCE-7M3K.jpg",
 	"stock": 1,
 	"is_consumable": false,
 	"is_lens": false,
@@ -82,7 +82,7 @@ POST http://localhost:8000/api/items/delete
 Content-Type: application/json
 
 {
-	"id": 4
+	"id": 1
 }
 
 ### Get items
