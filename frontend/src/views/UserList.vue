@@ -3,10 +3,8 @@
         <div>
             <v-container>
                 <v-row>
-                    <v-col v-for="n in 24" :key="n" cols="4">
-                            <router-link :to="{ path: '/about',query:{user_id:n}}">
-                                <v-avatar color="grey lighten-2" size="128"></v-avatar>
-                            </router-link>
+                    <v-col cols="4">
+                        <ItemCard :title="'Camera'" :imageUrl="'ggg'" :itemId="'jffdfd'" />
                     </v-col>
                 </v-row>
             </v-container>
@@ -16,10 +14,12 @@
 
 
 <script>
+import ItemCard from '@/components/ItemCard.vue';
+
 export default {
     name: 'HomeView',
     components: {
-        
+        ItemCard
     }
 }
 </script>

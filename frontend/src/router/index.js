@@ -1,53 +1,89 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
-import UserList from '../views/UserList.vue'
-import About from '../views/AboutView.vue'
-import ChartsTest from '../views/ChartsTest.vue'
-import AdminTop from '../views/AdminTop.vue'
-import ListsTest from '../views/ListsTest.vue'
-
-
+import UserList from '@/views/UserList.vue'
+import AdminTop from '@/views/AdminTop.vue'
+import Login from '@/views/Login.vue'
+import ItemList from '@/views/ItemList.vue'
+import {store} from '@/store'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'UserList',
-    component: UserList,
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: About,
-    // component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    name: 'itemList',
+    meta: { requireAuth: true, requireAdmin: false },
+    component: ItemList,
   },
   {
     path: '/admin',
     name: 'admin',
-    // component: () => import(/* webpackChunkName: "admin" */ '../views/AdminTop.vue')
+    meta: { requireAuth: true, requireAdmin: true },
     component: AdminTop,
   },
-    {
-    path: '/charts',
-    name: 'charts',
-    component: ChartsTest,
-    // component: () => import(/* webpackChunkName: "admin" */ '../views/ChartsTest.vue')
+  {
+    path: '/login',
+    name: 'login',
+    meta: { requireAuth: false, requireAdmin: false },
+    component: Login,
   },
   {
-    path: '/lists',
-    name: 'lists',
-    component: ListsTest,
-    // component: () => import(/* webpackChunkName: "admin" */ '../views/ChartsTest.vue')
+    path: '/signup',
+    name: 'signup',
+    meta: { requireAuth: false, requireAdmin: false },
+    component: Login,
   }
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  const isLoginPage = to.matched.some(record => record.path.includes("/login"))
+  const isSignupPage = to.matched.some(record => record.path.includes("/signup"))
+
+  const routeToLogin = () => {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  }
+
+  const routeToHome = () => {
+    next({ path: '/' })
+  }
+
+  if (!store.user) {
+    await store.auth()
+  }
+
+  const isAuthenticated = !!store.user
+  // TODO: implement
+  const isAdmin = false
+
+  if (isAuthenticated && (isSignupPage || isLoginPage)) {
+    routeToHome()
+    return
+  }
+
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    if (!isAuthenticated) {
+      routeToLogin()
+      return
+    }
+  }
+
+  if (to.matched.some(record => record.meta.requireAdmin)) {
+    if (!isAdmin) {
+      routeToHome()
+      return
+    }
+  }
+
+  next()
 })
 
 export default router
