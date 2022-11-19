@@ -48,6 +48,8 @@ def validate_fullname(f):
 
 
 # TODO: implement admin_only
+admin_email = os.environ.get('ADMIN')
+
 def protected(admin_only=False):
     def _protected(f):
         @wraps(f)
@@ -59,7 +61,12 @@ def protected(admin_only=False):
                 res = Response(status=UNAUTHORIZED)
                 res.delete_cookie("jwt-auth")
                 return res
-
+            
+            if admin_only and userInfo["email_address"] != admin_email:
+                res = Response(status=UNAUTHORIZED)
+                res.delete_cookie("jwt-auth")
+                return res
+            
             request.user = userInfo
             return f(*args, **kwargs)
         return __protected
