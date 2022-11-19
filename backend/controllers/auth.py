@@ -129,7 +129,7 @@ def logout():
     return res
 
 
-@bp.route("/protected")
+@bp.route("/authenticate")
 @protected()
-def test_protected():
+def authenticate():
     return jsonify(request.user)
