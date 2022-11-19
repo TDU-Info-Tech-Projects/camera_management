@@ -56,6 +56,25 @@ def register():
     return jsonify(request.json)
 
 
+@bp.route("/unregister", methods=('POST',))
+@protected(admin_only=True)
+def unregister():
+    req = request.json
+    with Session(engine) as session, session.begin():
+        user = session.query(User).where(User.email_address == req["email"]).one()
+        session.delete(user)
+        session.commit()
+    return Response(status=OK)
+
+
+@bp.route("/users")
+@protected(admin_only=True)
+def get_users():
+    with Session(engine) as session:
+        result = session.query(User).all()
+        return jsonify(result)
+
+
 @bp.route("/login", methods=('POST',))
 @validate_email
 @validate_password

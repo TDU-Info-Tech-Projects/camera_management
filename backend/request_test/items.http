@@ -14,6 +14,23 @@ Content-Type: application/json
 	"name": "Sony AE"
 }
 
+### Insert mount 3
+POST http://localhost:8000/api/mounts/add
+Content-Type: application/json
+
+{
+	"name": "Delete me"
+}
+
+
+### Delete mount
+POST http://localhost:8000/api/mounts/delete
+Content-Type: application/json
+
+{
+	"id": 4
+}
+
 ### Get mounts
 GET http://localhost:8000/api/mounts
 
@@ -43,6 +60,29 @@ Content-Type: application/json
 	"is_lens": false,
 	"mount_id": 2,
 	"release": "2020/02/02"
+}
+
+### Insert item 3
+POST http://localhost:8000/api/items/add
+Content-Type: application/json
+
+{
+	"name": "Delete me",
+	"image_url": "example.com",
+	"stock": 1,
+	"is_consumable": false,
+	"is_lens": false,
+	"mount_id": 2,
+	"release": "2020/02/02"
+}
+
+### Delete item
+
+POST http://localhost:8000/api/items/delete
+Content-Type: application/json
+
+{
+	"id": 4
 }
 
 ### Get items
