@@ -5,6 +5,7 @@ import UserList from '@/views/UserList.vue'
 import AdminTop from '@/views/AdminTop.vue'
 import Login from '@/views/Login.vue'
 import ItemList from '@/views/ItemList.vue'
+import MyRentItems from '@/views/MyRentItems.vue'
 import {store} from '@/store'
 
 Vue.use(VueRouter)
@@ -15,6 +16,12 @@ const routes = [
     name: 'itemList',
     meta: { requireAuth: true, requireAdmin: false },
     component: ItemList,
+  },
+  {
+    path: '/rented',
+    name: 'rented',
+    meta: { requireAuth: true, requireAdmin: false },
+    component: MyRentItems,
   },
   {
     path: '/admin',

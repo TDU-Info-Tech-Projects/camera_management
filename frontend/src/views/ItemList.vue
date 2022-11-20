@@ -1,15 +1,11 @@
 <template>
-    <v-app>
-        <div>
-            <v-container fluid>
-                <v-row dense justify="space-around">
-                    <v-col v-for="item in items" :key="item.id" style="max-width: 320px;">
-                        <ItemCard :item="item" :allItems="items" />
-                    </v-col>
-                </v-row>
-            </v-container>
-        </div>
-    </v-app>
+    <v-container fluid>
+        <v-row dense justify="space-around">
+            <v-col v-for="item in items" :key="item.id" style="max-width: 320px;">
+                <ItemCard :item="item" :allItems="items" />
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 
