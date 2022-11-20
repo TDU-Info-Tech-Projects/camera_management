@@ -1,4 +1,4 @@
-# hello-router
+# Camera rental
 
 ## Project setup
 ```
