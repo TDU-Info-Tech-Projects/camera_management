@@ -36,12 +36,19 @@ export default {
 
     methods: {
         async submit() {
-            await fetch(envs.baseURL + '/login', httpUtils.post({
+            const res = await fetch(envs.baseURL + '/login', httpUtils.post({
                 'email': this.email,
                 "password": this.password,
             }))
             // TODO: push to redirect route
-            this.$router.push(this.$route.query.redirect || "/")
+            if (res.ok) {
+                this.$router.push(this.$route.query.redirect || "/")
+            } else {
+                this.$swal({
+                    type: "warning",
+                    text: "ログインに失敗しました"
+                })
+            }
 
         },
         validate() {
