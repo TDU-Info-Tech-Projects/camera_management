@@ -14,6 +14,15 @@ Content-Type: application/json
 	"name": "Sony AE"
 }
 
+### Insert fake mount
+POST http://localhost:8000/api/mounts/add
+Content-Type: application/json
+
+{
+	"name": "None"
+}
+
+
 ### Insert mount 3
 POST http://localhost:8000/api/mounts/add
 Content-Type: application/json
@@ -44,10 +53,41 @@ Content-Type: application/json
 	"description": "一眼カメラメーカーの中でも近年急成長を見せているソニー。 キヤノンやニコンが中心となって展開していた一眼レフ全盛の時代からソニーはミラーレス一眼カメラの開発に力を入れていました。 そして最近になってミラーレス一眼カメラの存在価値が世間に認知されたことでソニーの一眼カメラというのはこれまで以上に注目を集める存在へと進化しました。 今回はそんなソニーが展開するミラーレス一眼カメラの中でもフルサイズセンサーを搭載し、代表的存在として人気を集めているα7IIIの魅力を作例とともにご紹介していきます。",
 	"stock": 1,
 	"is_consumable": false,
-	"is_lens": false,
-	"mount_id": 2,
+	"is_lens": true,
+	"mount_id": 3,
 	"release": "2020/02/02"
 }
+
+### Insert lens
+POST http://localhost:8000/api/items/add
+Content-Type: application/json
+
+{
+	"name": "ソニー SELP18105G",
+	"image_url": "https://m.media-amazon.com/images/I/61+GQbkyDwL._AC_SL1060_.jpg",
+	"description": "Eマウント専用レンズで初めてのGレンズ。ED（特殊低分散）ガラス2枚と非球面レンズ3枚の採用により、ズーム全域において高い解像力とコントラストを実現した、“G”の称号にふさわしい高性能中倍率ズームレンズです。広角27mmから中望遠157.5mm（＊）まで約6倍のズーム域をカバーし、全ての領域で使い勝手の良い開放F値4を実現。さらに電動ズームを搭載し、定速でのスムーズなズームが可能。光学式手ブレ補正も内蔵し、静止画撮影だけでなく動画撮影でも活躍するレンズである。 ",
+	"stock": 1,
+	"is_consumable": false,
+	"is_lens": true,
+	"mount_id": 2,
+	"release": "2020/01/10"
+}
+
+### Insert 映るんです
+POST http://localhost:8000/api/items/add
+Content-Type: application/json
+
+{
+	"name": "映っちゃたさん",
+	"image_url": "https://www.biccamera.com/bc/include_cms_contents/topics/camera/beginner/fuji_utsurundesu/02.jpg",
+	"description": "レトロ感と高級感のある人気の高い「写ルンです」初代モデルデザイン。まだまだカメラや写真が特別だった1986年に生まれ、たくさんの人の”ファーストカメラ”になった「写ルンです」。枚数に限りがあるから、失敗してもやり直せないから、一度のシャッターを、とても大切に思う感覚も、すべて撮り切るまで写真を見られないじれったさも、その時の心まで映すような、フィルムだけのアナログな仕上がりも、撮ったらすぐに見れる時代だからこそ、あらためて、新しい！",
+	"stock": 10,
+	"is_consumable": true,
+	"is_lens": true,
+	"mount_id": 3,
+	"release": "1980/11/11"
+}
+
 
 ### Insert item 2
 POST http://localhost:8000/api/items/add
@@ -83,7 +123,7 @@ POST http://localhost:8000/api/items/delete
 Content-Type: application/json
 
 {
-	"id": 1
+	"id": 3
 }
 
 ### Get items

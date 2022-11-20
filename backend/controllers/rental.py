@@ -16,14 +16,17 @@ from services.middleware import protected
 @protected()
 def rent_item():
     req = request.json
+    print(req, flush=True)
     if "ids" not in req:
         abort(UNPROCESSABLE_ENTITY)
 
     # YYYY-MM-DD
     loan_date = datetime.now().date()
-    due_date = datetime.fromisoformat(req["due_date"]).date()
+    due_date = None
+    if req["due_date"] is not None:
+        due_date = datetime.fromisoformat(req["due_date"]).date()
 
-    if due_date <= loan_date:
+    if due_date is not None and due_date <= loan_date:
         abort(UNPROCESSABLE_ENTITY)
 
     user_email = request.user["email_address"]
@@ -34,6 +37,9 @@ def rent_item():
         rent_items = []
         for item in items:
             if item.stock < 1:
+                abort(UNPROCESSABLE_ENTITY)
+
+            if not item.is_consumable and due_date is None:
                 abort(UNPROCESSABLE_ENTITY)
 
             rent_items.append(RentItem(
