@@ -4,7 +4,7 @@ from http.client import OK, UNPROCESSABLE_ENTITY
 
 from flask import jsonify, request, abort, Response
 from sqlalchemy import select, null
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, join
 
 from controllers.main import bp
 from database import engine
@@ -62,9 +62,10 @@ def rent_item():
 def rented_items():
     email = request.user["email_address"]
     with Session(engine) as session:
-        # TODO: Join
         user = session.execute(select(User).where(User.email_address == email)).scalar_one()
-        items = session.execute(select(RentItem).where(RentItem.user_id == user.id)).scalars().all()
+        items = session.execute(
+            select(Item).select_from(join(Item, RentItem, Item.rentItem)).filter(RentItem.user_id==user.id)
+        ).scalars().all()
 
         return jsonify(items)
 
