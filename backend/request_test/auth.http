@@ -1,4 +1,15 @@
-### Register
+### Register User 1
+POST http://localhost:8000/api/register
+Content-Type: application/json
+
+{
+	"email": "user1@test.com",
+	"password": "password1",
+	"first_name": "user2",
+	"last_name": "last2"
+}
+#
+### Register User 2
 POST http://localhost:8000/api/register
 Content-Type: application/json
 
@@ -9,7 +20,7 @@ Content-Type: application/json
 	"last_name": "last2"
 }
 
-### Register 2
+### Register delete user
 POST http://localhost:8000/api/register
 Content-Type: application/json
 
