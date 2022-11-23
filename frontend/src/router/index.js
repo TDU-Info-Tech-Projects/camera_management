@@ -33,7 +33,7 @@ const routes = [
     path: '/admin/rented',
     name: 'adminRented',
     meta: { requireAuth: true, requireAdmin: true },
-    component: ProductManage,
+    component: AdminRentedItems,
   },
   {
     path: '/login',
