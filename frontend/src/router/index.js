@@ -1,11 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import HomeView from '../views/HomeView.vue'
-import UserList from '@/views/UserList.vue'
-import AdminTop from '@/views/AdminTop.vue'
 import Login from '@/views/Login.vue'
 import ItemList from '@/views/ItemList.vue'
 import MyRentItems from '@/views/MyRentItems.vue'
+import ProductManage from '@/views/ProductManage.vue'
+import AdminRentedItems from '@/views/AdminRentedItems.vue'
 import {store} from '@/store'
 
 Vue.use(VueRouter)
@@ -24,10 +23,16 @@ const routes = [
     component: MyRentItems,
   },
   {
-    path: '/admin',
-    name: 'admin',
+    path: '/admin/product',
+    name: 'productManage',
     meta: { requireAuth: true, requireAdmin: true },
-    component: AdminTop,
+    component: ProductManage,
+  },
+  {
+    path: '/admin/rented',
+    name: 'adminRented',
+    meta: { requireAuth: true, requireAdmin: true },
+    component: AdminRentedItems,
   },
   {
     path: '/login',
@@ -68,8 +73,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const isAuthenticated = !!store.user
-  // TODO: implement
-  const isAdmin = false
+  const isAdmin = store.user && store.user.is_admin
 
   if (isAuthenticated && (isSignupPage || isLoginPage)) {
     routeToHome()

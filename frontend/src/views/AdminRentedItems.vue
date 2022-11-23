@@ -16,19 +16,19 @@
 import RentedItemTable from '@/components/RentedItemTable.vue';
 import { paths, httpUtils } from '@/utils';
 export default {
-    name: "MyRentItems",
+    name: "AdminRentedItems",
     components: { RentedItemTable },
     data() {
         return {
             returnedItems: [],
             due_items: [],
-            overdue_items: [],
+            overdue_items: []
         };
     },
     methods: {
         async fetchRentedItems() {
-            const res = await fetch(paths.myRentedItems, httpUtils.get())
-            const overdueRes = await fetch(paths.overdueRentedItems, httpUtils.get())
+            const res = await fetch(paths.adminRentedItems, httpUtils.get())
+            const overdueRes = await fetch(paths.adminOverdueRentedItems, httpUtils.get())
             if (!res.ok || !overdueRes.ok) {
                 this.$swal({
                     icon: 'error',

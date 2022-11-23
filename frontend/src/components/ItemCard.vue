@@ -62,7 +62,7 @@
   
 <script>
 import { store } from '@/store'
-import { httpUtils, paths } from '@/utils'
+import { httpUtils, paths, dateStringFormat } from '@/utils'
 
 export default {
   props: {
@@ -97,6 +97,7 @@ export default {
   },
 
   methods: {
+    dateStringFormat,
     async reserveDialog() {
       try {
         this.loading = true

@@ -1,7 +1,7 @@
 <template>
     <v-data-table :headers="headers" :items="items" sort-by="due_date" class="elevation-1">
         <template v-slot:top>
-            <v-toolbar color="primary">
+            <v-toolbar :color="color">
                 <v-toolbar-title style="color: white">{{                                                                                                                                                                                                                                                                                                                                                         title                                                                                                                                                                                                                                                                                                                                                         }}</v-toolbar-title>
 
                 <v-dialog v-model="dialog" max-width="500px">
@@ -51,7 +51,8 @@ import { httpUtils, paths } from '@/utils'
 export default {
     props: {
         items: Array,
-        title: String
+        title: String,
+        color: String,
     },
     data: () => ({
         dialog: false,

@@ -6,16 +6,22 @@
         <v-spacer></v-spacer>
 
         <v-tabs v-model="tab" align-with-title class="d-none d-sm-flex">
-          <v-tab :to="'/'" v-if="store.user" link>
+          <v-tab to="/" v-if="store.user" link>
             備品一覧
           </v-tab>
-          <v-tab :to="'/rented'" v-if="store.user" link>
+          <v-tab to="/rented" v-if="store.user" link>
             マイページ
           </v-tab>
-          <v-tab :to="'/login'" v-if="!store.user" link>
+          <v-tab to="/admin/product" v-if="store.user && store.user.is_admin" link>
+            商品管理
+          </v-tab>
+          <v-tab to="/admin/rented" v-if="store.user && store.user.is_admin" link>
+            レンタル管理
+          </v-tab>
+          <v-tab to="/login" v-if="!store.user" link>
             ログイン
           </v-tab>
-          <v-tab :to="'/signup'" v-if="!store.user" link>
+          <v-tab to="/signup" v-if="!store.user" link>
             新規登録
           </v-tab>
         </v-tabs>
