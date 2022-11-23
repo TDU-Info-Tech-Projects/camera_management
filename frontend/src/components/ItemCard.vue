@@ -1,32 +1,21 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" max-width="300" :disabled="item.stock <= 0 && !store.user.is_admin">
+  <v-card :loading="loading" class="mx-auto" max-width="300" :disabled="item.stock <= 0">
 
     <v-img height="200" :src="item.image_url"></v-img>
 
     <v-card-title>{{ item.name }}</v-card-title>
 
-    <v-card-text>
-      <v-chip active :color="item.stock > 0 ? 'deep-purple' : 'red'" text-color="white">
-        {{ item.stock > 0 ? item.is_consumable ? '購入可' : '貸出可' : item.is_consumable ? '在庫なし' : '貸出中' }}
-      </v-chip>
-
-      <v-chip v-if="item.stock > 0 && item.is_consumable" active color="deep-purple" text-color="white"
-        style="margin-left: 4px">
-        在庫数: {{ item.stock }}
-      </v-chip>
-    </v-card-text>
+    <v-card-text>{{ item.description.slice(0, 34) + '...' }}</v-card-text>
 
     <v-divider class="mx-4"></v-divider>
 
     <v-card-actions>
-      <v-btn color="deep-purple" text @click="reserveDialog" :disabled="item.stock <= 0 || loading">
-        {{ buyOrRent }}
+      <v-btn color="primary" depressed @click="reserveDialog" disabled v-if="item.stock <= 0">
+        {{ item.is_consumable ? '在庫なし' : '貸出中' }}
       </v-btn>
-      <v-btn color="deep-purple" text @click="" v-if="store.user.is_admin" :disabled="loading">
-        編集
-      </v-btn>
-      <v-btn color="deep-purple" text @click="" v-if="store.user.is_admin" :disabled="loading">
-        削除
+
+      <v-btn color="primary" depressed @click="reserveDialog" v-else>
+        {{ buyOrRent }} {{ item.stock > 0 && item.is_consumable ? `(在庫数: ${item.stock})` : '' }}
       </v-btn>
     </v-card-actions>
 
@@ -73,7 +62,7 @@
   
 <script>
 import { store } from '@/store'
-import { envs, httpUtils } from '@/utils'
+import { httpUtils, paths } from '@/utils'
 
 export default {
   props: {
@@ -92,7 +81,15 @@ export default {
 
   computed: {
     requireLensSelect() {
-      return !this.$props.item.is_lens
+      const item = this.$props.item
+      if (item.is_lens) {
+        return false
+      }
+      if (!item.mount_id || item.is_consumable) {
+        return false
+      }
+      
+      return true
     },
     buyOrRent() {
       return this.$props.item.is_consumable ? '購入' : 'レンタル'
@@ -114,7 +111,11 @@ export default {
         }
         this.dateOptions = dateOptions
 
-        let lensOptions = []
+        let lensOptions = [{
+          text: "カメラ本体のみ",
+          value: null
+        }]
+
         for (const item of this.allItems) {
           if (item.is_lens && this.$props.item.mount_id == item.mount_id)
             lensOptions.push({
@@ -122,10 +123,6 @@ export default {
               value: item.id
             })
         }
-        lensOptions.push({
-          text: "カメラ本体のみ",
-          value: null
-        })
         this.lensOptions = lensOptions
 
         this.dialog = true
@@ -136,18 +133,28 @@ export default {
     async confirmReserve() {
       try {
         const item = this.$props.item
+
+        if (!item.is_consumable && !this.dueDate) {
+          this.$swal({
+            icon: 'error',
+            title: '返却日を選択してください'
+          })
+          return
+        }
+
         let rentItems = [item.id]
         if (!item.is_lens && !item.is_consumable && this.lensId) {
           rentItems.push(this.lensId)
         }
-        const res = await fetch(envs.baseURL + "/items/rent", httpUtils.post({
+        const res = await fetch(paths.itemRent, httpUtils.post({
           ids: rentItems,
           due_date: this.dueDate
         }))
         if (res.ok) {
           this.reset()
           this.$swal({
-            title: "予約が完了しました。予約内容はマイページからご確認頂けます。",
+            icon: 'success',
+            text: `${this.buyOrRent}が完了しました。${this.buyOrRent}内容はマイページからご確認頂けます。`,
             allowOutsideClick: false
           }).then(() => {
             location.reload()
@@ -156,22 +163,32 @@ export default {
           throw res
         }
       } catch {
-        this.$swal("エラーが発生しました。もう一度お試しください。")
+        this.$swal({
+          icon: 'error',
+          text: 'エラーが発生しました。もう一度お試しください。'
+        })
       }
     },
     async reserve() {
-      this.$swal({
-        title: 'レンタル・購入を確定しますか',
-        icon: 'warning',
-        showCancelButton: true,
-        cancelButtonText: '戻る',
-        confirmButtonText: '予約確定！',
-        reverseButtons: true
-      }).then(result => {
-        if (result.isConfirmed) {
-          this.confirmReserve()
-        }
-      })
+      const item = this.$props.item
+
+      if (this.requireLensSelect && !this.lensId) {
+        this.$swal({
+          icon: 'warning',
+          title: '本体のみのレンタルでよろしいですか。',
+          text: '本商品は本体のみではご利用できません、レンズが必要になります。',
+          showCancelButton: true,
+          cancelButtonText: '戻る',
+          confirmButtonText: '本体のみレンタル',
+          reverseButtons: true
+        }).then(result => {
+          if (result.isConfirmed) {
+            this.confirmReserve()
+          }
+        })
+      } else {
+        this.confirmReserve()
+      }
     },
     reset() {
       this.dialog = false

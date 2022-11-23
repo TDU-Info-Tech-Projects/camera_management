@@ -13,6 +13,15 @@ export const httpUtils = {
     })
 }
 
-export const envs = {
-  'baseURL': 'http://localhost:8000/api'
+export const BaseURL = 'http://localhost:8000/api'
+export const paths = {
+    itemRent: BaseURL + "/items/rent",
+    itemList: BaseURL + "/items",
+    myRentedItems: BaseURL + "/items/rented",
+    myRentedItems: BaseURL + "/items/rented",
+    returnItem: BaseURL + "/items/return",
+    
+    authenticate: BaseURL + "/authenticate",
+    login: BaseURL + "/login",
+    logout: BaseURL + "/logout",
 }

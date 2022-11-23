@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { envs } from '@/utils'
+import { paths } from '@/utils'
 import { httpUtils } from '@/utils'
 
 export default {
@@ -36,11 +36,10 @@ export default {
 
     methods: {
         async submit() {
-            const res = await fetch(envs.baseURL + '/login', httpUtils.post({
+            const res = await fetch(paths.login, httpUtils.post({
                 'email': this.email,
                 "password": this.password,
             }))
-            // TODO: push to redirect route
             if (res.ok) {
                 this.$router.push(this.$route.query.redirect || "/")
             } else {

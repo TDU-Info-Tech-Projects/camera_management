@@ -1,8 +1,8 @@
 <template>
     <v-container fluid>
-        <v-row dense justify="space-around">
+        <v-row dense justify="start">
             <v-col v-for="item in items" :key="item.id" style="max-width: 320px;">
-                <ItemCard :item="item" :allItems="items" />
+                <ItemCard :item="item" :allItems="items" style="margin-top: 10px"/>
             </v-col>
         </v-row>
     </v-container>
@@ -11,7 +11,7 @@
 
 <script>
 import ItemCard from '@/components/ItemCard.vue';
-import { envs, httpUtils } from '@/utils';
+import { paths, httpUtils } from '@/utils';
 
 export default {
     name: 'ItemList',
@@ -24,7 +24,7 @@ export default {
     methods: {
         async getData() {
             try {
-                let res = await fetch(envs.baseURL + '/items', httpUtils.get())
+                let res = await fetch(paths.itemList, httpUtils.get())
                 this.items = await res.json()
             } catch {
                 this.$swal("エラーが発生しました。もう一度お試しください。")
