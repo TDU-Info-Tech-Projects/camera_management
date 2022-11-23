@@ -21,7 +21,7 @@ import os
 def register_mount():
     mount = None
     req = request.json
-    if "id" in req:
+    if "id" in req and req["id"] != "":
         with Session(engine) as session:
             mount = session.query(Mount).where(Mount.id == req["id"]).one()
     if mount is None:
@@ -31,8 +31,7 @@ def register_mount():
 
     with Session(engine) as session, session.begin():
         session.merge(mount)
-
-    return Response(status=OK)
+        return Response(status=OK)
 
 
 @bp.route("/mounts/delete", methods=('POST',))
@@ -43,7 +42,7 @@ def unregister_mount():
         mount = session.query(Mount).where(Mount.id == req["id"]).one()
         session.delete(mount)
         session.commit()
-    return Response(status=OK)
+        return Response(status=OK)
 
 
 @bp.route("/mounts")
@@ -59,7 +58,7 @@ def get_mounts():
 def register_item():
     item = None
     req = request.json
-    if "id" in req:
+    if "id" in req and req["id"] != "":
         with Session(engine) as session:
             item = session.query(Item).where(Item.id == req["id"]).one()
     if item is None:
@@ -71,15 +70,13 @@ def register_item():
     item.is_consumable = req["is_consumable"]
     item.is_lens = req["is_lens"]
     item.description = req["description"]
-    # item.category_id = req["category_id"]
-    # item.manufacture_id = req["manufacture_id"]
     item.mount_id = req["mount_id"]
     item.release = req["release"]
 
     with Session(engine) as session, session.begin():
         session.merge(item)
 
-    return Response(OK)
+        return Response(OK)
 
 
 @bp.route("/items/delete", methods=('POST',))
@@ -87,17 +84,14 @@ def register_item():
 def unregister_item():
     req = request.json
     with Session(engine) as session, session.begin():
-        # stmt = delete(RentItem).where(RentItem.item_id == req["id"])
-        # session.execute(stmt)
-        # TODO: check if auto cascade delete works
         item = session.query(Item).where(Item.id == req["id"]).one()
         session.delete(item)
-    return Response(status=OK)
+        return Response(status=OK)
 
 
 @bp.route("/items")
 def get_items():
     with Session(engine) as session:
-        result = session.execute(select(Item))
+        result = session.execute(select(Item).order_by(Item.id))
         items = result.scalars().all()
         return jsonify(items)

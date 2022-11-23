@@ -92,12 +92,31 @@ def rented_items():
         return jsonify(all_items)
 
 
-@bp.route("/items/rented/admin")
+@bp.route("/items/admin/rented")
 @protected(admin_only=True)
 def admin_rented_items():
-    with Session(engine) as session, session.begin():
-        items = session.execute(select(RentItem)).scalars().all()
-        return jsonify(items)
+    with Session(engine) as session:
+        all_items = {
+            'returned_items': [],
+            'due_items': []
+        }
+
+        queryRes = session.query(RentItem, Item).\
+            join(Item).filter(RentItem.return_date == None).\
+            order_by(RentItem.due_date.desc()).\
+            all()
+
+        for res in queryRes:
+            all_items['due_items'].append(res._asdict())
+
+        queryRes = session.query(RentItem, Item).\
+            join(Item).filter(RentItem.return_date != None).\
+            order_by(RentItem.due_date.desc()).\
+            all()
+        for res in queryRes:
+            all_items['returned_items'].append(res._asdict())
+
+        return jsonify(all_items)
 
 
 @bp.route("/items/overdue")
@@ -106,19 +125,38 @@ def overdue_items():
     email = request.user["email_address"]
     with Session(engine) as session, session.begin():
         user = session.execute(select(User).where(User.email_address == email)).scalar_one()
-        items = session.execute(select(RentItem).where((RentItem.user_id == user.id) & (RentItem.return_date == None) & (RentItem.due_date < datetime.now().date()))).scalars().all()
-        return jsonify(items)
 
+        queryRes = session.query(RentItem, Item).\
+            join(Item).filter(RentItem.return_date == None).\
+            filter(RentItem.due_date < datetime.now().date()).\
+            filter(RentItem.user_id == user.id).\
+            order_by(RentItem.due_date.desc()).\
+            all()
+            
+        overdue_items = []
+        for res in queryRes:
+            overdue_items.append(res._asdict())
 
-@bp.route("/items/overdue/admin")
+        return jsonify(overdue_items)
+
+@bp.route("/items/admin/overdue")
 @protected()
 def admin_overdue_items(admin_only=True):
     with Session(engine) as session, session.begin():
-        items = session.execute(select(RentItem).where((RentItem.return_date == None) & (RentItem.due_date < datetime.now().date()))).scalars().all()
-        return jsonify(items)
+
+        queryRes = session.query(RentItem, Item).\
+            join(Item).filter(RentItem.return_date == None).\
+            filter(RentItem.due_date < datetime.now().date()).\
+            order_by(RentItem.due_date.desc()).\
+            all()
+            
+        overdue_items = []
+        for res in queryRes:
+            overdue_items.append(res._asdict())
+
+        return jsonify(overdue_items)
 
 
-# receive IDs in the loan_items table
 @bp.route("/items/return", methods=("POST",))
 @protected()
 def return_items():
@@ -137,7 +175,7 @@ def return_items():
         items = []
 
         for rentItem in rentItems:
-            if rentItem.return_date or rentItem.user_id != user.id:
+            if rentItem.return_date or (rentItem.user_id != user.id and not request.user["is_admin"]):
                 abort(UNPROCESSABLE_ENTITY)
             rentItem.return_date = return_date
             item = session.execute(select(Item).where(Item.id == rentItem.item_id)).scalar_one()

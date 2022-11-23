@@ -11,13 +11,13 @@ Content-Type: application/json
 GET http://localhost:8000/api/items/rented
 
 ### Admin rented items
-GET http://localhost:8000/api/items/rented/admin
+GET http://localhost:8000/api/items/admin/rented
 
 ### Overdue items
 GET http://localhost:8000/api/items/overdue
 
 ### Admin overdue items
-GET http://localhost:8000/api/items/overdue/admin
+GET http://localhost:8000/api/items/admin/overdue
 
 ### Return
 POST http://localhost:8000/api/items/return
