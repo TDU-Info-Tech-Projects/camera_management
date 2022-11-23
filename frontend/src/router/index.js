@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/views/Login.vue'
+import Register from '@/views/Register.vue'
 import ItemList from '@/views/ItemList.vue'
 import MyRentItems from '@/views/MyRentItems.vue'
 import ProductManage from '@/views/ProductManage.vue'
@@ -32,7 +33,7 @@ const routes = [
     path: '/admin/rented',
     name: 'adminRented',
     meta: { requireAuth: true, requireAdmin: true },
-    component: AdminRentedItems,
+    component: ProductManage,
   },
   {
     path: '/login',
@@ -44,7 +45,7 @@ const routes = [
     path: '/signup',
     name: 'signup',
     meta: { requireAuth: false, requireAdmin: false },
-    component: Login,
+    component: Register,
   }
 ]
 

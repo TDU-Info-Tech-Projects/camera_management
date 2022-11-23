@@ -13,7 +13,7 @@ export const httpUtils = {
     })
 }
 
-export const BaseURL = 'http://localhost:8000/api'
+export const BaseURL = 'http://localhost/api'
 export const paths = {
     itemRent: BaseURL + "/items/rent",
     itemList: BaseURL + "/items",
@@ -33,6 +33,7 @@ export const paths = {
     deleteMount: BaseURL + "/mounts/delete",
 
     authenticate: BaseURL + "/authenticate",
+    register: BaseURL + "/register",
     login: BaseURL + "/login",
     logout: BaseURL + "/logout",
 }
