@@ -23,7 +23,6 @@ class User(Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
-    rentItem = relationship("RentItem", backref="users")
 
 # class Category(Base):
 #     __tablename__ = "category"
@@ -68,10 +67,10 @@ class Item(Base):
     is_lens=Column(Boolean, nullable=False)
     # category_id = Column(Integer, ForeignKey("category.id"), nullable=False)
     # manufacture_id = Column(Integer, ForeignKey("manufacture.id"), nullable=False)
-    mount_id = Column(Integer, ForeignKey("mounts.id"), nullable=False)
+    mount_id = Column(Integer, ForeignKey("mounts.id"))
     description = Column(String, nullable=True)
     release = Column(DateTime)
-    rentItem = relationship("RentItem", backref="items")
+    rentItems = relationship("RentItem", back_populates="item", cascade="all, delete-orphan")
 
 @dataclass
 class RentItem(Base):
@@ -89,6 +88,7 @@ class RentItem(Base):
     loan_date = Column(DateTime, default=datetime.utcnow)
     due_date = Column(DateTime)
     return_date = Column(DateTime)
+    item = relationship("Item", back_populates="rentItems")
 
 def main(args):
     print(Base.metadata.tables)

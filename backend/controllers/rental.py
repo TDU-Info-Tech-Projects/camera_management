@@ -39,14 +39,19 @@ def rent_item():
             if item.stock < 1:
                 abort(UNPROCESSABLE_ENTITY)
 
+            return_date = None
             if not item.is_consumable and due_date is None:
                 abort(UNPROCESSABLE_ENTITY)
+            elif item.is_consumable:            
+                due_date = datetime.now().date()
+                return_date = datetime.now().date()
 
             rent_items.append(RentItem(
                 user_id=user.id,
                 item_id=item.id,
                 loan_date=loan_date,
-                due_date=due_date
+                due_date=due_date,
+                return_date=return_date
             ))
 
             item.stock -= 1
@@ -63,11 +68,28 @@ def rented_items():
     email = request.user["email_address"]
     with Session(engine) as session:
         user = session.execute(select(User).where(User.email_address == email)).scalar_one()
-        items = session.execute(
-            select(Item).select_from(join(Item, RentItem, Item.rentItem)).filter(RentItem.user_id==user.id)
-        ).scalars().all()
+        all_items = {
+            'returned_items': [],
+            'due_items': []
+        }
 
-        return jsonify(items)
+        queryRes = session.query(RentItem, Item).\
+            join(Item).filter(RentItem.user_id == user.id).\
+            filter(RentItem.return_date == None).\
+            order_by(RentItem.due_date.desc()).\
+            all()
+        for res in queryRes:
+            all_items['due_items'].append(res._asdict())
+
+        queryRes = session.query(RentItem, Item).\
+            join(Item).filter(RentItem.user_id == user.id).\
+            filter(RentItem.return_date != None).\
+            order_by(RentItem.due_date.desc()).\
+            all()
+        for res in queryRes:
+            all_items['returned_items'].append(res._asdict())
+
+        return jsonify(all_items)
 
 
 @bp.route("/items/rented/admin")

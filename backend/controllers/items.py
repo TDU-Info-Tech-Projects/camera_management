@@ -87,8 +87,9 @@ def register_item():
 def unregister_item():
     req = request.json
     with Session(engine) as session, session.begin():
-        stmt = delete(RentItem).where(RentItem.item_id == req["id"])
-        session.execute(stmt)
+        # stmt = delete(RentItem).where(RentItem.item_id == req["id"])
+        # session.execute(stmt)
+        # TODO: check if auto cascade delete works
         item = session.query(Item).where(Item.id == req["id"]).one()
         session.delete(item)
     return Response(status=OK)

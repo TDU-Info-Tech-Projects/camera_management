@@ -32,7 +32,7 @@ cp .env.example .env
         - pgadminを立ち上げる (pgAdminは実行に必要ないがDBの中身を見たい時は便利！)
             - `docker compose up pgadmin -d` 
         - DBを初期化 (最初だけ実行、その後は実行しない)
-            - `docker compose run --rm api /bin/sh -c "pipenv install --system && python -m database.models` 
+            - `docker compose run --rm api /bin/sh -c "pipenv install --system && python -m database.models"` 
         - APIを立ち上げる
             - `docker compose up api`
 

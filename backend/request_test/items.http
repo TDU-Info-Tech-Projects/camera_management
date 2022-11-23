@@ -14,14 +14,6 @@ Content-Type: application/json
 	"name": "Sony AE"
 }
 
-### Insert fake mount
-POST http://localhost:8000/api/mounts/add
-Content-Type: application/json
-
-{
-	"name": "None"
-}
-
 
 ### Insert mount 3
 POST http://localhost:8000/api/mounts/add
@@ -53,8 +45,8 @@ Content-Type: application/json
 	"description": "一眼カメラメーカーの中でも近年急成長を見せているソニー。 キヤノンやニコンが中心となって展開していた一眼レフ全盛の時代からソニーはミラーレス一眼カメラの開発に力を入れていました。 そして最近になってミラーレス一眼カメラの存在価値が世間に認知されたことでソニーの一眼カメラというのはこれまで以上に注目を集める存在へと進化しました。 今回はそんなソニーが展開するミラーレス一眼カメラの中でもフルサイズセンサーを搭載し、代表的存在として人気を集めているα7IIIの魅力を作例とともにご紹介していきます。",
 	"stock": 1,
 	"is_consumable": false,
-	"is_lens": true,
-	"mount_id": 3,
+	"is_lens": false,
+	"mount_id": 2,
 	"release": "2020/02/02"
 }
 
@@ -83,24 +75,24 @@ Content-Type: application/json
 	"description": "レトロ感と高級感のある人気の高い「写ルンです」初代モデルデザイン。まだまだカメラや写真が特別だった1986年に生まれ、たくさんの人の”ファーストカメラ”になった「写ルンです」。枚数に限りがあるから、失敗してもやり直せないから、一度のシャッターを、とても大切に思う感覚も、すべて撮り切るまで写真を見られないじれったさも、その時の心まで映すような、フィルムだけのアナログな仕上がりも、撮ったらすぐに見れる時代だからこそ、あらためて、新しい！",
 	"stock": 10,
 	"is_consumable": true,
-	"is_lens": true,
-	"mount_id": 3,
+	"is_lens": false,
+	"mount_id": null,
 	"release": "1980/11/11"
 }
 
-
-### Insert item 2
+### Insert RX100VII
 POST http://localhost:8000/api/items/add
 Content-Type: application/json
 
 {
-	"name": "Sony a6400",
-	"image_url": "sony.com",
+	"name": "SONY DSC-RX100M7",
+	"image_url": "https://www.sony.jp/products/picture/DSC-RX100M7.jpg",
+	"description": "「RX100 VII」は、新開発のイメージセンサーと最新の画像処理技術の組み合わせにより、高頻度な演算処理を行い、高精度なAF/AE追従を可能にした最高20コマ/秒※2 のブラックアウトフリー連続撮影※3 に加え、ソニー製カメラとして初めて、最高90コマ/秒※7 の速度で撮影するワンショット連続撮影※8 機能や世界最速※9 0.02秒※10 の高速AFを搭載し、RXシリーズ最高クラスのスピード性能を実現。さらに、フルサイズミラーレス一眼カメラ「α9」や「α7RIV」にも搭載されている、AI※11 により動体を高精度に追従し続けるリアルタイムトラッキングやリアルタイム瞳AF（動物対応含む※12）にも対応し、AF性能においてもソニーの最先端技術が凝縮されています。加えて、動画撮影時のリアルタイムトラッキングやリアルタイム瞳AF※6 、4Kアクティブ手ブレ補正の他、本体にマイク端子を搭載するなど、クリエイターの要望に応える高い動画撮影性能を実現したプレミアムコンパクトカメラです。",
 	"stock": 1,
 	"is_consumable": false,
 	"is_lens": false,
-	"mount_id": 2,
-	"release": "2020/02/02"
+	"mount_id": null,
+	"release": "2019/08/30"
 }
 
 ### Insert item 3
