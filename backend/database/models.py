@@ -65,8 +65,6 @@ class Item(Base):
     stock = Column(Integer, default=1, nullable=False)
     is_consumable = Column(Boolean, nullable=False)
     is_lens=Column(Boolean, nullable=False)
-    # category_id = Column(Integer, ForeignKey("category.id"), nullable=False)
-    # manufacture_id = Column(Integer, ForeignKey("manufacture.id"), nullable=False)
     mount_id = Column(Integer, ForeignKey("mounts.id"))
     description = Column(String, nullable=True)
     release = Column(DateTime)

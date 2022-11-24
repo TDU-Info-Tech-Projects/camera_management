@@ -71,7 +71,7 @@ def register_item():
     item.is_lens = req["is_lens"]
     item.description = req["description"]
     item.mount_id = req["mount_id"]
-    item.release = req["release"]
+    item.release = req["release"] if req["release"] else None
 
     with Session(engine) as session, session.begin():
         session.merge(item)

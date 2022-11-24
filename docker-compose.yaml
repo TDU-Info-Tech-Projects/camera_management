@@ -11,6 +11,8 @@ services:
       - ./db-data/:/var/lib/postgresql/data/
     networks:
       - prod
+    logging:
+      driver: none
 
   ui_prod:
     container_name: ui_prod
@@ -18,6 +20,8 @@ services:
     networks:
       - prod
     restart: unless-stopped
+    logging:
+      driver: none
 
   api_prod:
     container_name: api_prod
@@ -30,6 +34,8 @@ services:
     networks:
       - prod
     restart: unless-stopped
+    logging:
+      driver: none
 
   caddy:
     image: caddy:2.6.2-alpine
@@ -42,6 +48,8 @@ services:
       - ./caddy_data:/data
     networks:
       - prod
+    logging:
+      driver: none
 
 networks:
   prod:
