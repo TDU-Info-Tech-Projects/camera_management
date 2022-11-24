@@ -59,7 +59,7 @@ def rent_item():
         session.bulk_save_objects(items)
         session.add_all(rent_items)
 
-    return Response(OK)
+    return Response(status=OK)
 
 
 @bp.route("/items/rented")
@@ -185,4 +185,4 @@ def return_items():
         session.bulk_save_objects(rentItems)
         session.bulk_save_objects(items)
 
-    return Response(OK)
+    return Response(status=OK)

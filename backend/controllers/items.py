@@ -76,7 +76,7 @@ def register_item():
     with Session(engine) as session, session.begin():
         session.merge(item)
 
-        return Response(OK)
+        return Response(status=OK)
 
 
 @bp.route("/items/delete", methods=('POST',))
