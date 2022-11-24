@@ -13,7 +13,8 @@ export const httpUtils = {
     })
 }
 
-export const BaseURL = 'http://localhost/api'
+export const BaseURL = '/api'
+
 export const paths = {
     itemRent: BaseURL + "/items/rent",
     itemList: BaseURL + "/items",
