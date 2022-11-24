@@ -25,7 +25,7 @@
                                 <v-select v-model="editedItem.mount_id" :items="mountOptions" label="マウント" />
                                 <v-text-field v-model="editedItem.release" label="発売日" />
                                 <v-text-field v-model="editedItem.stock" label="在庫数" />
-                                <v-checkbox v-model="editedItem.is_consumable" label="返却必要か否か" />
+                                <v-checkbox v-model="editedItem.is_consumable" label="返却しなくても良い" />
                                 <v-checkbox v-model="editedItem.is_lens" label="レンズか否か" />
                             </v-container>
                         </v-card-text>
