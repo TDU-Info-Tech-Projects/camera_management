@@ -13,7 +13,8 @@ export const httpUtils = {
     })
 }
 
-export const BaseURL = '/api'
+// export const BaseURL = '/api'
+export const BaseURL = 'http://localhost:8000/api'
 
 export const paths = {
     itemRent: BaseURL + "/items/rent",
@@ -22,9 +23,11 @@ export const paths = {
     overdueRentedItems: BaseURL + "/items/overdue",
     returnItem: BaseURL + "/items/return",
 
+
     addItem: BaseURL + "/items/add",
     deleteItem: BaseURL + "/items/delete",
 
+    adminUserList: BaseURL + "/admin/users",
     adminRentedItems: BaseURL + "/items/admin/rented",
     adminOverdueRentedItems: BaseURL + "/items/admin/overdue",
     adminReturnItem: BaseURL + "/items/admin/return",

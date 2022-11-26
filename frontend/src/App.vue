@@ -19,6 +19,9 @@
           <v-tab to="/admin/rented" v-if="store.user && store.user.is_admin" link>
             レンタル管理
           </v-tab>
+          <v-tab to="/admin/users" v-if="store.user && store.user.is_admin" link>
+             ユーザ管理
+          </v-tab>
           <v-tab to="/login" v-if="!store.user" link>
             ログイン
           </v-tab>
@@ -48,6 +51,9 @@
             </v-list-item>
             <v-list-item to="/admin/rented" @click="hideNavBar" link v-if="store.user && store.user.is_admin">
               <v-list-item-title>レンタル管理</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/admin/users" @click="hideNavBar" link v-if="store.user && store.user.is_admin">
+              <v-list-item-title>ユーザ管理</v-list-item-title>
             </v-list-item>
 
             <v-list-item to="/login" @click="hideNavBar" link v-if="!store.user">

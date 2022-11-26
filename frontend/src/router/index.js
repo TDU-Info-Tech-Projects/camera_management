@@ -5,6 +5,7 @@ import Register from '@/views/Register.vue'
 import ItemList from '@/views/ItemList.vue'
 import MyRentItems from '@/views/MyRentItems.vue'
 import ProductManage from '@/views/ProductManage.vue'
+import UserManage from '@/views/UserManage.vue'
 import AdminRentedItems from '@/views/AdminRentedItems.vue'
 import {store} from '@/store'
 
@@ -34,6 +35,12 @@ const routes = [
     name: 'adminRented',
     meta: { requireAuth: true, requireAdmin: true },
     component: AdminRentedItems,
+  },
+  {
+    path: '/admin/users',
+    name: 'adminUserManage',
+    meta: { requireAuth: true, requireAdmin: true },
+    component: UserManage,
   },
   {
     path: '/login',
