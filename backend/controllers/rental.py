@@ -3,8 +3,8 @@ from datetime import datetime
 from http.client import OK, UNPROCESSABLE_ENTITY
 
 from flask import jsonify, request, abort, Response
-from sqlalchemy import select, null
-from sqlalchemy.orm import Session, join
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 from controllers.main import bp
 from database import engine
@@ -140,8 +140,8 @@ def overdue_items():
         return jsonify(overdue_items)
 
 @bp.route("/items/admin/overdue")
-@protected()
-def admin_overdue_items(admin_only=True):
+@protected(admin_only=True)
+def admin_overdue_items():
     with Session(engine) as session, session.begin():
 
         queryRes = session.query(RentItem, Item).\

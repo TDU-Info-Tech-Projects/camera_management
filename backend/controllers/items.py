@@ -1,19 +1,11 @@
-from crypt import methods
-from datetime import datetime, timedelta
-from http.client import OK, UNPROCESSABLE_ENTITY, UNAUTHORIZED
-from time import timezone
-from flask import jsonify, request, abort, Response
-from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
-from os import urandom
+from http.client import OK
+from flask import jsonify, request, Response
 from database import engine
 from controllers.main import bp
-from database.models import Item, Mount, RentItem
-from services import validate_email, validate_password
+from database.models import Item, Mount
 from sqlalchemy.orm import Session
-from sqlalchemy import select, delete
-from services.middleware import validate_fullname, protected
-import jwt
-import os
+from sqlalchemy import select
+from services.middleware import protected
 
 
 @bp.route("/mounts/add", methods=('POST',))

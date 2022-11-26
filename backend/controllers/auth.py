@@ -1,12 +1,9 @@
-from crypt import methods
 from datetime import datetime, timedelta
 from http.client import OK, UNPROCESSABLE_ENTITY, UNAUTHORIZED
-from select import select
-from time import timezone
 from flask import jsonify, request, abort, Response
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 from os import urandom
-from database.models import User, Mount
+from database.models import User
 from database import engine
 from controllers.main import bp
 from services import validate_email, validate_password
@@ -65,14 +62,6 @@ def unregister():
         session.delete(user)
         session.commit()
     return Response(status=OK)
-
-
-@bp.route("/users")
-@protected(admin_only=True)
-def get_users():
-    with Session(engine) as session:
-        result = session.query(User).all()
-        return jsonify(result)
 
 
 ADMIN_EMAIL = os.environ.get("ADMIN")
