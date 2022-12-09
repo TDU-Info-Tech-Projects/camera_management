@@ -51,6 +51,19 @@ services:
     logging:
       driver: none
 
+  pgadmin_prod:
+    container_name: pgadmin_container_prod
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "5959:80"
+    networks:
+      - prod
+    restart: unless-stopped
+
 networks:
   prod:
     name: network-for-prod
